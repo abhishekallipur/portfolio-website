@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Contact.sh Monochromatic Terminal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "mono-black": "#000000",
+                        "mono-dark": "#1A1A1A",
+                        "mono-medium": "#333333",
+                        "mono-light": "#A1A1A1",
+                        "mono-offwhite": "#EFEFEF",
+                        "terminal-border": "#333333",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .cursor-blink {
+            animation: blink 1s infinite;
+        }
+        ::placeholder {
+            color: #4A4A4A !important;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-mono-black font-display text-mono-offwhite min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
+    <div
+        class="w-full max-w-4xl bg-mono-black border border-mono-medium rounded-xl shadow-2xl overflow-hidden flex flex-col">
+        <header class="flex items-center justify-between bg-mono-dark border-b border-mono-medium px-4 py-3">
+            <div class="flex items-center gap-2">
+                <div class="flex gap-1.5">
+                    <div class="size-3 rounded-full bg-red-500/90"></div>
+                    <div class="size-3 rounded-full bg-yellow-500/90"></div>
+                    <div class="size-3 rounded-full bg-green-500/90"></div>
+                </div>
+                <div class="ml-4 flex items-center gap-2 text-mono-light">
+                    <span class="material-symbols-outlined text-sm">terminal</span>
+                    <h2 class="text-sm font-medium leading-tight tracking-tight uppercase">root@abhishek: ~/contact.sh
+                    </h2>
+                </div>
+            </div>
+            <div class="flex items-center gap-6">
+                <nav class="hidden md:flex items-center gap-6">
+                    <a class="text-mono-light hover:text-mono-offwhite text-xs font-medium transition-colors"
+                        href="index.html">Home</a>
+                    <a class="text-mono-light hover:text-mono-offwhite text-xs font-medium transition-colors"
+                        href="index.html#projects">Projects</a>
+                    <a class="text-mono-light hover:text-mono-offwhite text-xs font-medium transition-colors"
+                        href="index.html#education">About</a>
+                </nav>
+                <button
+                    class="flex items-center justify-center rounded h-8 w-8 bg-mono-medium text-mono-light hover:text-white transition-colors">
+                    <span class="material-symbols-outlined text-lg">tabs</span>
+                </button>
+            </div>
+        </header>
+        <main class="p-6 md:p-10 flex-1 flex flex-col gap-8">
+            <div class="flex flex-col gap-2">
+                <p class="text-mono-offwhite text-3xl md:text-4xl font-black leading-tight tracking-tight">#!/bin/bash
+                </p>
+                <div class="flex items-center gap-2 text-mono-light text-sm font-normal">
+                    <span class="text-mono-offwhite">[ INFO ]</span>
+                    <span>Initializing contact script sequence...</span>
+                </div>
+            </div>
+            <form class="flex flex-col gap-6 max-w-2xl">
+                <div class="flex flex-col gap-3">
+                    <label class="flex flex-col gap-2">
+                        <div class="flex items-center gap-2 text-sm md:text-base font-medium">
+                            <span class="text-mono-light">user@portfolio:~$</span>
+                            <span class="text-mono-offwhite/70 italic">echo $NAME</span>
+                        </div>
+                        <input
+                            class="form-input w-full rounded-lg text-mono-offwhite focus:outline-none focus:ring-1 focus:ring-mono-light border border-mono-medium bg-mono-dark/50 h-12 px-4 text-base font-normal transition-all"
+                            placeholder="Type your full name..." type="text" />
+                    </label>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="flex flex-col gap-2">
+                        <div class="flex items-center gap-2 text-sm md:text-base font-medium">
+                            <span class="text-mono-light">user@portfolio:~$</span>
+                            <span class="text-mono-offwhite/70 italic">read EMAIL</span>
+                        </div>
+                        <input
+                            class="form-input w-full rounded-lg text-mono-offwhite focus:outline-none focus:ring-1 focus:ring-mono-light border border-mono-medium bg-mono-dark/50 h-12 px-4 text-base font-normal transition-all"
+                            placeholder="you@example.com" type="email" />
+                    </label>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="flex flex-col gap-2">
+                        <div class="flex items-center gap-2 text-sm md:text-base font-medium">
+                            <span class="text-mono-light">user@portfolio:~$</span>
+                            <span class="text-mono-offwhite/70 italic">nano MESSAGE.txt</span>
+                        </div>
+                        <textarea
+                            class="form-input w-full rounded-lg text-mono-offwhite focus:outline-none focus:ring-1 focus:ring-mono-light border border-mono-medium bg-mono-dark/50 min-h-[160px] p-4 text-base font-normal transition-all resize-none"
+                            placeholder="Write your message here... CTRL+O to save, CTRL+X to exit."></textarea>
+                    </label>
+                </div>
+                <div class="pt-4 flex flex-col gap-4">
+                    <div class="flex items-center gap-2 text-sm font-medium text-mono-light">
+                        <span class="text-mono-light">user@portfolio:~$</span>
+                        <span>./send_message.sh --target="abhishek"</span>
+                    </div>
+                    <button
+                        class="group relative flex items-center justify-center overflow-hidden rounded-lg h-14 bg-mono-medium text-mono-offwhite font-bold text-lg tracking-wider transition-all hover:bg-mono-offwhite hover:text-mono-black active:scale-[0.98] w-full md:w-64 border border-mono-medium"
+                        type="submit">
+                        <span class="relative z-10">[ ENTER TO SEND ]</span>
+                        <div
+                            class="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500">
+                        </div>
+                    </button>
+                </div>
+            </form>
+            <div class="mt-4 flex flex-col gap-2 font-mono text-sm">
+                <div class="flex items-center gap-3 text-mono-light">
+                    <span class="text-mono-offwhite">[ OK ]</span>
+                    <span>Ready for transmission.</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-mono-light">user@portfolio:~$</span>
+                    <span class="inline-block w-2.5 h-5 bg-mono-offwhite cursor-blink"></span>
+                </div>
+            </div>
+        </main>
+        <footer
+            class="bg-mono-dark border-t border-mono-medium px-6 py-4 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest text-mono-light font-bold gap-4">
+            <div>Connection: SECURE (SSH-RSA)</div>
+            <div class="flex gap-8 text-mono-offwhite">
+                <a href="https://github.com/abhishekallipur" target="_blank"
+                    class="mono-text text-sm font-bold text-[var(--syntax-green)] hover:text-white transition-colors">
+                    [ git: github ]
+                </a>
+                <a href="https://www.linkedin.com/in/abhishek-allipur-a2047731b" target="_blank"
+                    class="mono-text text-sm font-bold text-[var(--syntax-green)] hover:text-white transition-colors">
+                    [ in: linkedin ]
+                </a>
+            </div>
+            <div>Uptime: 142 days, 4:21</div>
+        </footer>
+    </div>
+    <div class="mt-8 text-center text-mono-light text-xs">
+        © 2024 Abhishek Allipur. Built with raw terminal energy.
+    </div>
+
+</body>
+
+</html>

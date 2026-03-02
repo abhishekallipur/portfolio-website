@@ -1,0 +1,1009 @@
+<html class="scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Abhishek Allipur | Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&amp;family=Inter:wght@300;400;600;800&amp;family=Playfair+Display:wght@700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <style type="text/tailwindcss">
+        :root {
+            --pitch-black: #000000;
+            --dark-gray: #0D0D0D;
+            --medium-gray: #1A1A1A;
+            --border-gray: #2D2D2D;
+            --off-white: #E0E0E0;
+            --syntax-purple: #B197FC;
+            --syntax-green: #69DB7C;
+            --syntax-yellow: #FFD43B;
+            --syntax-orange: #FFA94D;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--pitch-black);
+            color: var(--off-white);
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 32px 32px;
+            overflow-x: hidden;
+        }
+        .mono-text {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .serif-text {
+            font-family: 'Playfair Display', serif;
+        }
+        .editor-window {
+            background-color: var(--dark-gray);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .editor-header {
+            background-color: var(--medium-gray);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border-gray);
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+        .dot-red { background-color: #FF5F56; }
+        .dot-yellow { background-color: #FFBD2E; }
+        .dot-green { background-color: #27C93F; }
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.2em;
+            background-color: var(--off-white);
+            margin-left: 4px;
+            vertical-align: middle;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .nav-tab {
+            @apply border-r border-white/5 px-6 py-3 text-[11px] mono-text transition-all flex items-center gap-2 relative;
+            background: var(--medium-gray);
+            color: rgba(255,255,255,0.4);
+        }
+        .nav-tab.active {
+            background: var(--dark-gray);
+            color: var(--off-white);
+            border-top: 2px solid var(--off-white);
+        }
+        .nav-tab:not(.active):hover {
+            color: var(--off-white);
+            background: rgba(255,255,255,0.05);
+        }
+        .syntax-keyword { color: var(--syntax-purple); }
+        .syntax-string { color: var(--syntax-green); }
+        .syntax-variable { color: var(--syntax-yellow); }
+        .syntax-comment { color: #666666; font-style: italic; }
+        .code-tag {
+            @apply mono-text text-[10px] bg-white/5 border border-white/10 px-2 py-1 rounded transition-colors hover:bg-white/10;
+        }
+        .btn-mono {
+            @apply mono-text px-6 py-3 border border-white/20 transition-all duration-200 hover:bg-white/10 hover:border-white/40;
+        }
+        .line-number {
+            @apply text-white/10 mono-text text-xs pr-4 text-right select-none border-r border-white/5;
+            min-width: 40px;
+        }
+        .profile-frame {
+            border: 2px solid var(--border-gray);
+            box-shadow: 0 0 25px rgba(45, 45, 45, 0.6);
+            border-radius: 30px;
+            background-color: #151515;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #boot-screen {
+            position: fixed;
+            inset: 0;
+            background: #000000;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 10% 20%;
+        }
+        .boot-log {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: logEntry 0.1s forwards;
+        }
+        @keyframes logEntry {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .progress-bar-container {
+            width: 300px;
+            height: 2px;
+            background: rgba(255,255,255,0.1);
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--off-white);
+            width: 0%;
+            animation: fillProgress 3.5s cubic-bezier(0.1, 0, 0.3, 1) forwards;
+        }
+        @keyframes fillProgress {
+            0% { width: 0%; }
+            20% { width: 10%; }
+            40% { width: 45%; }
+            70% { width: 85%; }
+            100% { width: 100%; }
+        }
+        @keyframes screenFadeOut {
+            to { transform: translateY(-100%); opacity: 0; visibility: hidden; }
+        }
+        .boot-complete {
+            animation: screenFadeOut 0.8s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+            animation-delay: 0.5s;
+        }
+        .git-branch-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-gray);
+        }
+        .git-node {
+            position: absolute;
+            left: 16px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--off-white);
+            border: 2px solid var(--pitch-black);
+            z-index: 10;
+        }
+        .sos-icon {
+            background: white;
+            border-radius: 12px;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sos-circle {
+            background: #FF3B30;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            box-shadow: 0 4px 10px rgba(255, 59, 48, 0.3);
+        }
+
+        /* EASTER EGG STYLES */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+
+        #crash-screen {
+            position: fixed;
+            inset: 0;
+            background: #0000AA; /* Classic BSOD blue or terminal red */
+            z-index: 10000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 10% 20%;
+            color: white;
+        }
+        
+        .matrix-mode #crash-screen {
+            background: #aa0000; /* Red Kernel Panic */
+        }
+
+        @keyframes glitch-anim {
+            0% { transform: translate(0); text-shadow: 0 0 0; }
+            20% { transform: translate(-2px, 1px); text-shadow: 2px 0 red, -2px 0 blue; }
+            40% { transform: translate(2px, -1px); text-shadow: -2px 0 red, 2px 0 blue; }
+            60% { transform: translate(-1px, 2px); text-shadow: 2px 0 var(--syntax-green), -2px 0 var(--syntax-purple); }
+            80% { transform: translate(1px, -2px); text-shadow: -2px 0 var(--syntax-green), 2px 0 var(--syntax-purple); }
+            100% { transform: translate(0); text-shadow: 0 0 0; }
+        }
+        
+        .matrix-mode body * {
+            color: #0f0 !important;
+            border-color: #0f0 !important;
+            background-color: #000 !important;
+            box-shadow: none !important;
+        }
+        
+        .matrix-mode .editor-window,
+        .matrix-mode h1, .matrix-mode h2, .matrix-mode h3,
+        .matrix-mode p, .matrix-mode span {
+            animation: glitch-anim 0.3s infinite alternate-reverse;
+        }
+    </style>
+</head>
+
+<body class="selection:bg-white/20">
+    <div id="boot-screen">
+        <div class="mono-text text-xs space-y-1 mb-6">
+            <div class="boot-log" style="animation-delay: 0.2s"><span class="text-[var(--syntax-green)]">[ OK ]</span>
+                Initializing Abhishek_OS...</div>
+            <div class="boot-log" style="animation-delay: 0.8s"><span class="text-[var(--syntax-green)]">[ OK ]</span>
+                Loading Project: CrediVist...</div>
+            <div class="boot-log" style="animation-delay: 1.4s"><span class="text-[var(--syntax-green)]">[ OK ]</span>
+                Mounting AI Modules...</div>
+            <div class="boot-log" style="animation-delay: 2.0s"><span class="text-[var(--syntax-green)]">[ OK ]</span>
+                Establishing neural pathways...</div>
+            <div class="boot-log" style="animation-delay: 2.8s"><span class="text-[var(--syntax-green)]">[ OK ]</span>
+                System Ready <span class="cursor"></span></div>
+        </div>
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill"></div>
+        </div>
+    </div>
+
+    <div id="crash-screen">
+        <div class="mono-text text-xl md:text-3xl font-bold mb-8 uppercase tracking-widest">
+            *** KERNEL PANIC - NOT SYNCING: FATAL EXCEPTION IN INTERRUPT ***
+        </div>
+        <div class="mono-text text-xs md:text-sm space-y-2 opacity-80">
+            <div>Call Trace:</div>
+            <div>[ 43.918239] ? triggerMatrixMode+0x9c/0x1e0 [Abhishek_OS_core]</div>
+            <div>[ 43.918991] ? handle_unauthorized_access+0x13/0x20 [security]</div>
+            <div>[ 43.919702] ? page_fault+0x1b/0x20</div>
+            <br>
+            <div>Memory corrupted. Initiating emergency reboot sequence...</div>
+            <div class="mt-8 text-[var(--syntax-yellow)] font-bold animate-pulse">REBOOTING IN 3...</div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('boot-screen').classList.add('boot-complete');
+                document.body.classList.remove('overflow-hidden');
+
+                // Start typing animation slightly after boot completes
+                setTimeout(startTypingAnimation, 600);
+            }, 4000);
+        });
+
+        function startTypingAnimation() {
+            const container = document.getElementById('hero-code-container');
+            if (!container) return;
+
+            const codeHTML = `
+<div class="mb-4"><span class="syntax-keyword">Engineer</span> <span class="syntax-variable">developer</span> = <span class="syntax-keyword">new</span> Engineer(</div>
+<div class="pl-8 space-y-2">
+    <div><span class="syntax-string">"Abhishek Allipur"</span>,</div>
+    <div><span class="syntax-string">"AI &amp; Full Stack Engineer"</span>,</div>
+    <div><span class="syntax-keyword">new</span> String[]{<span class="syntax-string">"Scalable Systems"</span>, <span class="syntax-string">"Ethical AI"</span>},</div>
+    <div><span class="syntax-string">"Architecting intelligent solutions"</span></div>
+</div>
+<div class="mb-8">);</div>
+<div class="mb-12">
+    <span class="syntax-keyword">if</span> (<span class="syntax-variable">developer</span>.isAvailable()) {<br />
+    <span class="pl-8"><span class="syntax-variable">System</span>.out.println(<span class="syntax-string">"Let's build something."</span>);</span><br />
+    }
+</div>`;
+
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = codeHTML.trim();
+
+            container.innerHTML = '<span class="cursor"></span>';
+            const cursor = container.querySelector('.cursor');
+
+            function typeNode(node, parentElement, onComplete) {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    let text = node.textContent;
+                    let i = 0;
+
+                    function typeChar() {
+                        if (i < text.length) {
+                            const charNode = document.createTextNode(text.charAt(i));
+                            parentElement.insertBefore(charNode, cursor);
+                            i++;
+                            const speed = Math.random() * 40 + 20;
+                            setTimeout(typeChar, speed);
+                        } else {
+                            onComplete();
+                        }
+                    }
+                    typeChar();
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    const newElement = document.createElement(node.tagName);
+
+                    for (let i = 0; i < node.attributes.length; i++) {
+                        const attr = node.attributes[i];
+                        newElement.setAttribute(attr.name, attr.value);
+                    }
+
+                    parentElement.insertBefore(newElement, cursor);
+
+                    if (node.childNodes.length > 0) {
+                        newElement.appendChild(cursor);
+                        typeNodesArray(Array.from(node.childNodes), newElement, () => {
+                            parentElement.insertBefore(cursor, newElement.nextSibling);
+                            onComplete();
+                        });
+                    } else {
+                        onComplete();
+                    }
+                } else {
+                    onComplete();
+                }
+            }
+
+            function typeNodesArray(nodes, parentElement, onComplete) {
+                let currentIdx = 0;
+
+                function processNext() {
+                    if (currentIdx < nodes.length) {
+                        typeNode(nodes[currentIdx], parentElement, () => {
+                            currentIdx++;
+                            setTimeout(processNext, 50);
+                        });
+                    } else {
+                        onComplete();
+                    }
+                }
+
+                processNext();
+            }
+
+            typeNodesArray(Array.from(tempDiv.childNodes), container, () => {
+                // Done
+            });
+        }
+
+        // --- EASTER EGG SCRIPT ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // The secret code is just 'sudo' - obvious to devs watching the site!
+            const secretCode = ['s', 'u', 'd', 'o'];
+            let currentSequence = [];
+
+            window.addEventListener('keydown', (e) => {
+                const key = e.key.toLowerCase();
+                currentSequence.push(key);
+
+                // Keep sequence length trimmed to the secret code length
+                currentSequence.splice(-secretCode.length - 1, currentSequence.length - secretCode.length);
+
+                // Check if the typed sequence exactly matches the secret code
+                if (currentSequence.join('') === secretCode.join('')) {
+                    triggerMatrixMode();
+                    currentSequence = []; // Reset after trigger
+                }
+            });
+        });
+
+        function triggerMatrixMode() {
+            // Only trigger once
+            if (document.body.classList.contains('matrix-mode')) return;
+
+            document.body.classList.add('matrix-mode');
+
+            // Create Canvas
+            const canvas = document.createElement('canvas');
+            canvas.id = 'matrix-canvas';
+            document.body.appendChild(canvas);
+
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            setTimeout(() => { canvas.style.opacity = '0.35'; }, 100);
+
+            // Matrix Characters (Katakana + Latin)
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%""\'#&_(),.;:?!\\|{}<>[]^~ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ'.split('');
+
+            const fontSize = 16;
+            const columns = canvas.width / fontSize;
+            const drops = [];
+
+            for (let x = 0; x < columns; x++) {
+                drops[x] = 1;
+            }
+
+            function drawMatrix() {
+                // Black bg with opacity for trails
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#0F0'; // Green text
+                ctx.font = fontSize + 'px monospace';
+
+                for (let i = 0; i < drops.length; i++) {
+                    const text = chars[Math.floor(Math.random() * chars.length)];
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+
+            // Run animation hook
+            const matrixInterval = setInterval(drawMatrix, 33);
+
+            // Crash after 10 seconds
+            setTimeout(() => {
+                clearInterval(matrixInterval);
+                const crashScreen = document.getElementById('crash-screen');
+                crashScreen.style.display = 'flex';
+
+                // Reboot after 3 seconds on the crash screen
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 3000);
+            }, 10000);
+        }
+
+        // --- SKILL TERMINAL SCRIPT ---
+        const skillDefinitions = {
+            "python": "A versatile core logic language. I use it to build the 'brains' of a project, write AI algorithms, and handle heavy data behind the scenes.",
+            "typescript": "A safer version of JavaScript. It helps me catch bugs before they happen, making the user interface rock-solid and reliable.",
+            "java": "A powerful, heavy-duty language. I use it to build massive, structured applications that need to run perfectly on any device.",
+            "tensorflow": "Google's AI toolbox. I use this to teach computers how to recognize patterns, like building smart credit-scoring systems.",
+            "pytorch": "A flexible AI engine. I use it when I need to rapidly build, test, and tweak complex artificial intelligence models.",
+            "scikit_learn": "A toolkit for predictive math. I use it to look at past data and predict future outcomes automatically.",
+            "nodejs": "The backbone of the internet. It allows me to build the hidden server logic that powers fast, real-time websites and apps.",
+            "django": "A robust web builder. I use it to quickly securely assemble the database and backend logic for large websites.",
+            "docker": "A shipping container for code. It guarantees that an app I build on my laptop will run exactly the same way on any other computer.",
+            "kotlin": "The modern language of Android. I use it to write clean, crash-free code for mobile applications like BrainTrap.",
+            "jetpack_compose": "A UI design tool for phones. It lets me build beautiful, smooth Android app screens much faster than older methods.",
+            "git": "A time machine for code. It saves every change I make so I can collaborate with teams safely without ever losing work.",
+            "kubernetes": "A traffic cop for apps. If millions of people suddenly visit a project, this system automatically copies the app across servers so it doesn't crash.",
+            "aws": "Amazon's cloud service. I rent their massive internet computers to host my databases, websites, and apps for the world to see."
+        };
+
+        let skillTypingTimeout = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const skillTags = document.querySelectorAll('.skill-tag');
+            const termContainer = document.getElementById('skill-terminal-container');
+            const termName = document.getElementById('skill-term-name');
+            const termOutput = document.getElementById('skill-term-output');
+
+            skillTags.forEach(tag => {
+                tag.addEventListener('click', (e) => {
+                    const skillKey = e.target.getAttribute('data-skill');
+                    const definition = skillDefinitions[skillKey];
+                    const rawName = e.target.textContent;
+
+                    // Reveal terminal if hidden
+                    if (termContainer.classList.contains('opacity-0')) {
+                        termContainer.classList.remove('opacity-0', 'h-0');
+                        termContainer.classList.add('opacity-100', 'h-auto');
+                    }
+
+                    // Reset styling on tags
+                    skillTags.forEach(t => t.classList.remove('bg-white/20', 'border-white/50'));
+                    e.target.classList.add('bg-white/20', 'border-white/50');
+
+                    // Set title
+                    termName.textContent = rawName;
+
+                    // Clear previous typing
+                    if (skillTypingTimeout) clearTimeout(skillTypingTimeout);
+                    termOutput.innerHTML = '<span class="cursor"></span>';
+
+                    // Type out definition
+                    let charIndex = 0;
+                    function typeDefChar() {
+                        if (charIndex < definition.length) {
+                            const char = definition.charAt(charIndex);
+                            const cursor = termOutput.querySelector('.cursor');
+                            const charNode = document.createTextNode(char);
+                            termOutput.insertBefore(charNode, cursor);
+                            charIndex++;
+                            skillTypingTimeout = setTimeout(typeDefChar, 10); // Very fast typing
+                        }
+                    }
+                    typeDefChar();
+                });
+            });
+        });
+
+    </script>
+    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto flex overflow-x-auto no-scrollbar">
+            <div class="flex items-center px-6 py-3 border-r border-white/5">
+                <span class="mono-text font-bold text-xs">A_A <span class="text-white/20">_</span></span>
+            </div>
+            <a class="nav-tab active" href="#home">
+                <span class="material-symbols-outlined text-sm">terminal</span> index.js
+            </a>
+            <a class="nav-tab" href="#projects">
+                <span class="material-symbols-outlined text-sm">folder_open</span> workspace/
+            </a>
+            <a class="nav-tab" href="#skills">
+                <span class="material-symbols-outlined text-sm">settings_input_component</span> packages.json
+            </a>
+            <a class="nav-tab" href="#education">
+                <span class="material-symbols-outlined text-sm">school</span> history.log
+            </a>
+            <a class="nav-tab" href="contact.html">
+                <span class="material-symbols-outlined text-sm">terminal</span> contact.sh
+            </a>
+        </div>
+    </nav>
+    <section class="min-h-screen flex flex-col justify-center px-6 pt-24" id="home">
+        <div class="max-w-6xl mx-auto w-full">
+            <div class="editor-window">
+                <div class="editor-header">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                    <div class="ml-4 mono-text text-[10px] text-white/40">abhishek@workstation: ~/portfolio</div>
+                </div>
+                <div class="p-8 md:p-12 mono-text text-sm md:text-base leading-relaxed">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div class="flex">
+                            <div
+                                class="hidden md:flex flex-col text-white/10 pr-6 mr-6 border-r border-white/5 select-none text-right">
+                                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
+                            </div>
+                            <div class="flex-1">
+                                <div id="hero-code-container" style="min-height: 250px;">
+                                    <span class="cursor"></span>
+                                </div>
+                                <div class="flex flex-wrap gap-4">
+                                    <a class="btn-mono text-[10px] uppercase" href="#projects">git clone ./projects</a>
+                                    <a class="btn-mono text-[10px] uppercase bg-white text-black font-bold border-white"
+                                        href="contact.html">sh ./contact.sh</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center justify-center space-y-6">
+                            <div class="profile-frame w-64 h-64 md:w-80 md:h-80 group">
+                                <div class="absolute inset-0 opacity-10 pointer-events-none">
+                                    <div class="w-full h-full"
+                                        style="background-image: radial-gradient(var(--off-white) 1px, transparent 1px); background-size: 20px 20px;">
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex flex-col items-center gap-4 text-white/20 transition-all duration-300 group-hover:text-white/40">
+                                    <span class="material-symbols-outlined text-6xl md:text-8xl">person</span>
+                                    <div class="flex flex-col items-center">
+                                        <span
+                                            class="mono-text text-[10px] uppercase tracking-[0.2em]">/dev/null/profile.img</span>
+                                        <div class="mt-2 text-[8px] mono-text opacity-40">CRC32: 0x7FFA4B2D</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <div
+                                    class="w-2 h-2 rounded-full bg-[var(--syntax-green)] shadow-[0_0_8px_var(--syntax-green)]">
+                                </div>
+                                <span class="mono-text text-[10px] text-white/30 uppercase tracking-widest">System
+                                    Online</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-32 px-6" id="projects">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex items-center gap-4 mb-20">
+                <span class="line-number">03</span>
+                <h2 class="mono-text text-xs text-white/40 tracking-[0.3em] uppercase">
+                    <span class="text-[var(--syntax-green)]">01.</span> selected_repositories
+                </h2>
+            </div>
+            <div class="grid grid-cols-1 gap-32">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="lg:order-2 bg-black border border-white/10 p-2 rounded-lg">
+                        <div class="editor-header bg-black/50 py-2">
+                            <div class="dot dot-red !w-2 !h-2"></div>
+                            <div class="dot dot-yellow !w-2 !h-2"></div>
+                            <div class="dot dot-green !w-2 !h-2"></div>
+                            <span class="ml-2 text-[8px] mono-text opacity-40">credivist_engine_v2.py</span>
+                        </div>
+                        <div class="aspect-video relative overflow-hidden bg-[#111] flex items-center justify-center">
+                            <div class="flex items-center gap-4 bg-white/95 px-8 py-6 rounded-xl">
+                                <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
+                                    <span class="text-white text-2xl font-bold">₹</span>
+                                </div>
+                                <span class="serif-text text-black text-5xl font-bold tracking-tight">CrediVist</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:order-1">
+                        <span class="mono-text text-[10px] text-[var(--syntax-purple)] block mb-4">branch:
+                            main/credivist</span>
+                        <div class="flex items-center gap-4 mb-6">
+                            <div
+                                class="w-10 h-10 bg-white/10 rounded flex items-center justify-center border border-white/10">
+                                <span class="text-white text-xl font-bold">₹</span>
+                            </div>
+                            <h3 class="text-4xl serif-text font-bold tracking-tight">CrediVist</h3>
+                        </div>
+                        <p class="text-white/50 mb-8 mono-text text-sm leading-relaxed">
+                            Empowering the underbanked with AI-driven credit assessment using alternative data signals.
+                            Optimized for high-precision financial risk mitigation.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="code-tag">Python</span>
+                            <span class="code-tag">Pandas</span>
+                            <span class="code-tag">XGBoost</span>
+                            <span class="code-tag">SHAP</span>
+                        </div>
+                        <div class="flex gap-6 mt-4">
+                            <a class="mono-text text-sm font-bold flex items-center gap-3 text-[var(--syntax-green)] hover:text-white transition-colors border border-[var(--syntax-green)] px-4 py-2 rounded hover:bg-[var(--syntax-green)]/10"
+                                href="https://github.com/abhishekallipur/Credivisit" target="_blank">
+                                <span class="material-symbols-outlined text-lg">code</span> [ view source ]
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="bg-black border border-white/10 p-2 rounded-lg">
+                        <div class="editor-header bg-black/50 py-2">
+                            <div class="dot dot-red !w-2 !h-2"></div>
+                            <div class="dot dot-yellow !w-2 !h-2"></div>
+                            <div class="dot dot-green !w-2 !h-2"></div>
+                            <span class="ml-2 text-[8px] mono-text opacity-40">lifelink_v1.0.apk</span>
+                        </div>
+                        <div class="aspect-video relative overflow-hidden bg-[#111] flex items-center justify-center">
+                            <div class="sos-icon">
+                                <div class="sos-circle">
+                                    <span class="text-xl leading-none">SOS</span>
+                                    <span class="text-2xl leading-none mt-1">+</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="mono-text text-[10px] text-[var(--syntax-purple)] block mb-4">branch:
+                            main/lifelink</span>
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-10 h-10 bg-white rounded flex items-center justify-center">
+                                <div
+                                    class="w-8 h-8 bg-[#FF3B30] rounded-full flex items-center justify-center text-[8px] font-bold text-white">
+                                    SOS+</div>
+                            </div>
+                            <h3 class="text-4xl font-black tracking-tighter">LifeLink</h3>
+                        </div>
+                        <p class="text-white/50 mb-8 mono-text text-sm leading-relaxed">
+                            P2P mesh networking application for survivor coordination. Built on custom communication
+                            protocols for infrastructure-less zones.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="code-tag">Android</span>
+                            <span class="code-tag">P2P</span>
+                            <span class="code-tag">Firebase</span>
+                        </div>
+                        <div class="flex gap-6 mt-4">
+                            <a class="mono-text text-sm font-bold flex items-center gap-3 text-[var(--syntax-green)] hover:text-white transition-colors border border-[var(--syntax-green)] px-4 py-2 rounded hover:bg-[var(--syntax-green)]/10"
+                                href="https://github.com/abhishekallipur/lifelink" target="_blank">
+                                <span class="material-symbols-outlined text-lg">terminal</span> [ cd ./repo ]
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJECT 3: Mindful Usage -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="lg:order-2 bg-black border border-white/10 p-2 rounded-lg">
+                        <div class="editor-header bg-black/50 py-2">
+                            <div class="dot dot-red !w-2 !h-2"></div>
+                            <div class="dot dot-yellow !w-2 !h-2"></div>
+                            <div class="dot dot-green !w-2 !h-2"></div>
+                            <span class="ml-2 text-[8px] mono-text opacity-40">braintrap_app.kt</span>
+                        </div>
+                        <div class="aspect-video relative overflow-hidden bg-[#111] flex items-center justify-center">
+                            <!-- Minimalist Icon for BrainTrap -->
+                            <div
+                                class="w-32 h-32 rounded-3xl bg-neutral-900 border-2 border-[var(--syntax-yellow)]/30 flex items-center justify-center relative overflow-hidden">
+                                <div
+                                    class="absolute inset-0 bg-[var(--syntax-yellow)]/5 flex items-center justify-center">
+                                    <span
+                                        class="material-symbols-outlined text-[var(--syntax-yellow)] text-6xl">psychology</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:order-1">
+                        <span class="mono-text text-[10px] text-[var(--syntax-purple)] block mb-4">branch:
+                            main/braintrap</span>
+                        <div class="flex items-center gap-4 mb-6">
+                            <div
+                                class="w-10 h-10 bg-[var(--syntax-yellow)]/20 rounded flex items-center justify-center border border-[var(--syntax-yellow)]/30">
+                                <span
+                                    class="material-symbols-outlined text-[var(--syntax-yellow)] text-xl">psychology</span>
+                            </div>
+                            <h3 class="text-4xl serif-text font-bold tracking-tight">BrainTrap</h3>
+                        </div>
+                        <p class="text-white/50 mb-8 mono-text text-sm leading-relaxed">
+                            A digital wellness Android app blocking "brain rot" social media. Features real-time app
+                            blocking via Accessibility Services, progressive arithmetic challenges for screen time, and
+                            local Room DB statistics.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="code-tag">Kotlin</span>
+                            <span class="code-tag">Jetpack Compose</span>
+                            <span class="code-tag">MVVM</span>
+                            <span class="code-tag">Room</span>
+                            <span class="code-tag">Hilt</span>
+                        </div>
+                        <div class="flex gap-6 mt-4">
+                            <a class="mono-text text-sm font-bold flex items-center gap-3 text-[var(--syntax-green)] hover:text-white transition-colors border border-[var(--syntax-green)] px-4 py-2 rounded hover:bg-[var(--syntax-green)]/10"
+                                href="https://github.com/abhishekallipur/braintrap" target="_blank">
+                                <span class="material-symbols-outlined text-lg">code</span> [ view source ]
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-32 px-6 bg-[var(--dark-gray)]" id="skills">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="mono-text text-xs text-white/40 tracking-[0.3em] uppercase mb-4">
+                    <span class="text-[var(--syntax-yellow)]">02.</span> technical_dependencies
+                </h2>
+                <p class="mono-text text-[10px] text-white/20">~/packages.json --list (click for man page)</p>
+            </div>
+
+            <!-- INTERACTIVE SKILL TERMINAL -->
+            <div id="skill-terminal-container"
+                class="max-w-3xl mx-auto mb-16 bg-black border border-white/10 rounded-lg overflow-hidden transition-all duration-300 opacity-0 h-0">
+                <div class="bg-white/5 border-b border-white/10 px-4 py-2 flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-white/20"></div>
+                    <span class="mono-text text-[10px] text-white/40">man_page.sh</span>
+                </div>
+                <div class="p-6 md:p-8 min-h-[120px]">
+                    <div class="mono-text text-xs text-[var(--syntax-green)] mb-3">$ man <span
+                            id="skill-term-name">...</span></div>
+                    <div id="skill-term-output" class="mono-text text-sm text-white/70 leading-relaxed">
+                        <span class="cursor"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                <!-- Row 1: Languages -->
+                <div class="p-6 border border-white/5 rounded">
+                    <h3
+                        class="mono-text text-xs font-bold mb-6 text-white/40 uppercase tracking-widest border-b border-white/5 pb-2">
+                        Languages</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="code-tag skill-tag cursor-pointer hover:bg-white/10 transition-colors"
+                            data-skill="python">python@3.10</span>
+                        <span class="code-tag skill-tag cursor-pointer hover:bg-white/10 transition-colors"
+                            data-skill="typescript">typescript@latest</span>
+                        <span class="code-tag skill-tag cursor-pointer hover:bg-white/10 transition-colors"
+                            data-skill="java">java@11</span>
+                    </div>
+                </div>
+                <!-- Row 2: AI ML -->
+                <div class="p-6 border border-white/5 rounded">
+                    <h3
+                        class="mono-text text-xs font-bold mb-6 text-white/40 uppercase tracking-widest border-b border-white/5 pb-2">
+                        AI_ML_Lib</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="code-tag skill-tag cursor-pointer hover:bg-white/10 transition-colors"
+                            data-skill="tensorflow">tensorflow</span>
+                        <span class="code-tag skill-tag cursor-pointer hover:bg-white/10 transition-colors"
+                            data-skill="pytorch">pytorch</span>
+                        <span class="code-tag skill-tag cursor-pointer hover:bg-white/10 transition-colors"
+                            data-skill="scikit_learn">scikit-learn</span>
+                    </div>
+                </div>
+                <!-- Row 3: Backend -->
+                <div class="p-6 border border-white/5 rounded">
+                    <h3
+                        class="mono-text text-xs font-bold mb-6 text-white/40 uppercase tracking-widest border-b border-white/5 pb-2">
+                        Back_End</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="code-tag skill-tag cursor-pointer hover:bg-white/10 transition-colors"
+                            data-skill="nodejs">nodejs</span>
+                        <span class="code-tag skill-tag cursor-pointer hover:bg-white/10 transition-colors"
+                            data-skill="django">django</span>
+                        <span class="code-tag skill-tag cursor-pointer hover:bg-white/10 transition-colors"
+                            data-skill="docker">docker</span>
+                    </div>
+                </div>
+                <!-- Row 4: Mobile Dev (NEW) -->
+                <div class="p-6 border border-white/5 rounded">
+                    <h3
+                        class="mono-text text-xs font-bold mb-6 text-white/40 uppercase tracking-widest border-b border-white/5 pb-2">
+                        Mobile_Dev</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="code-tag skill-tag cursor-pointer hover:bg-white/10 transition-colors"
+                            data-skill="kotlin">kotlin</span>
+                        <span class="code-tag skill-tag cursor-pointer hover:bg-white/10 transition-colors"
+                            data-skill="jetpack_compose">jetpack-compose</span>
+                    </div>
+                </div>
+                <!-- Row 5: Dev Tools -->
+                <div class="p-6 border border-white/5 rounded">
+                    <h3
+                        class="mono-text text-xs font-bold mb-6 text-white/40 uppercase tracking-widest border-b border-white/5 pb-2">
+                        Dev_Tools</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="code-tag skill-tag cursor-pointer hover:bg-white/10 transition-colors"
+                            data-skill="git">git</span>
+                        <span class="code-tag skill-tag cursor-pointer hover:bg-white/10 transition-colors"
+                            data-skill="kubernetes">kubernetes</span>
+                        <span class="code-tag skill-tag cursor-pointer hover:bg-white/10 transition-colors"
+                            data-skill="aws">aws</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-32 px-6" id="education">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center gap-4 mb-20">
+                <span class="line-number">01</span>
+                <h2 class="mono-text text-xs text-white/40 tracking-[0.3em] uppercase">
+                    <span class="text-[var(--syntax-purple)]">03.</span> Academic_Trajectory
+                </h2>
+            </div>
+            <div class="relative pl-12">
+                <div class="git-branch-line"></div>
+                <div class="relative mb-20">
+                    <div class="git-node"></div>
+                    <div class="mono-text text-sm">
+                        <div class="text-white/40 mb-1">commit 8b2a1f4</div>
+                        <div class="mb-1">Author: Abhishek Allipur <span
+                                class="text-white/40">&lt;work.abhishekallipur@gmail.com&gt;</span></div>
+                        <div class="text-white/60 mb-4">Date: Nov 2023 - Present</div>
+                        <div class="mt-6">
+                            <h3 class="text-lg font-bold text-white mb-2">Merge degree into main: B.Tech in CSE (CGPA
+                                8.2)</h3>
+                            <ul class="list-none space-y-1 text-white/50 border-l border-white/10 pl-4">
+                                <li
+                                    class="relative before:content-['*'] before:absolute before:-left-3 before:text-white/20">
+                                    Dayananda Sagar University</li>
+                                <li
+                                    class="relative before:content-['*'] before:absolute before:-left-3 before:text-white/20">
+                                    Specialization in Artificial Intelligence and Machine Learning.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative mb-20">
+                    <div class="git-node"></div>
+                    <div class="mono-text text-sm">
+                        <div class="text-white/40 mb-1">commit f7d3e21</div>
+                        <div class="mb-1">Author: Abhishek Allipur <span
+                                class="text-white/40">&lt;work.abhishekallipur@gmail.com&gt;</span></div>
+                        <div class="text-white/60 mb-4">Date: June 2021 - May 2023</div>
+                        <div class="mt-6">
+                            <h3 class="text-lg font-bold text-white mb-2">Merge certification: Class 12 (89%)</h3>
+                            <ul class="list-none space-y-1 text-white/50 border-l border-white/10 pl-4">
+                                <li
+                                    class="relative before:content-['*'] before:absolute before:-left-3 before:text-white/20">
+                                    Sir MV PU College</li>
+                                <li
+                                    class="relative before:content-['*'] before:absolute before:-left-3 before:text-white/20">
+                                    Completed PU education with focus on PCMC (Physics, Chemistry, Maths, Computer
+                                    Science).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="git-node"></div>
+                    <div class="mono-text text-sm">
+                        <div class="text-white/40 mb-1">commit a1b2c3d</div>
+                        <div class="mb-1">Author: Abhishek Allipur <span
+                                class="text-white/40">&lt;work.abhishekallipur@gmail.com&gt;</span></div>
+                        <div class="text-white/60 mb-4">Date: Mar 2020 - Apr 2021</div>
+                        <div class="mt-6">
+                            <h3 class="text-lg font-bold text-white mb-2">Initialize: Class 10 (68%)</h3>
+                            <ul class="list-none space-y-1 text-white/50 border-l border-white/10 pl-4">
+                                <li
+                                    class="relative before:content-['*'] before:absolute before:-left-3 before:text-white/20">
+                                    PSSEMR School</li>
+                                <li
+                                    class="relative before:content-['*'] before:absolute before:-left-3 before:text-white/20">
+                                    Secondary education milestone.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-32 px-6" id="contact">
+        <div class="max-w-2xl mx-auto">
+            <div class="editor-window border-white/10">
+                <div class="editor-header bg-white/5 border-b border-white/10">
+                    <span class="mono-text text-[10px] text-white/40">contact.sh</span>
+                </div>
+                <div class="p-8">
+                    <div class="mb-10">
+                        <span class="syntax-keyword">function</span> <span
+                            class="syntax-variable">transmitMessage</span>() {
+                    </div>
+                    <form class="space-y-6">
+                        <div>
+                            <label class="mono-text text-[10px] uppercase text-white/30 block mb-2">--sender</label>
+                            <input
+                                class="w-full bg-black border border-white/10 p-4 mono-text text-sm rounded outline-none focus:border-white/40 text-white"
+                                placeholder="your_name" type="text" />
+                        </div>
+                        <div>
+                            <label class="mono-text text-[10px] uppercase text-white/30 block mb-2">--email</label>
+                            <input
+                                class="w-full bg-black border border-white/10 p-4 mono-text text-sm rounded outline-none focus:border-white/40 text-white"
+                                placeholder="you@example.com" type="email" />
+                        </div>
+                        <div>
+                            <label class="mono-text text-[10px] uppercase text-white/30 block mb-2">--body</label>
+                            <textarea
+                                class="w-full bg-black border border-white/10 p-4 mono-text text-sm rounded outline-none focus:border-white/40 text-white"
+                                placeholder="Enter message text..." rows="4"></textarea>
+                        </div>
+                        <div class="pt-4">
+                            <button
+                                class="w-full bg-white text-black font-bold py-4 mono-text text-xs uppercase tracking-widest hover:bg-white/90 transition-all rounded"
+                                type="submit">
+                                ./transmit_payload.sh
+                            </button>
+                        </div>
+                    </form>
+                    <div class="mt-8">
+                        <span class="syntax-keyword">}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="py-12 px-6 border-t border-white/5 bg-black">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="mono-text text-[10px] text-white/20">
+                [system] :: built with html &amp; tailwind // 2024
+            </div>
+            <div class="flex gap-8">
+                <a class="mono-text text-sm font-bold text-[var(--syntax-green)] hover:text-white transition-colors"
+                    href="https://github.com/abhishekallipur" target="_blank">
+                    [ git: github ]
+                </a>
+                <a class="mono-text text-sm font-bold text-[var(--syntax-green)] hover:text-white transition-colors"
+                    href="https://www.linkedin.com/in/abhishek-allipur-a2047731b" target="_blank">
+                    [ in: linkedin ]
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
