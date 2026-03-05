@@ -249,6 +249,200 @@
         .matrix-mode p, .matrix-mode span {
             animation: glitch-anim 0.3s infinite alternate-reverse;
         }
+
+        /* FALLOUT HACKING GAME STYLES */
+        #hacking-terminal {
+            position: fixed;
+            inset: 0;
+            background-color: #022002;
+            z-index: 99999;
+            display: none;
+            flex-direction: column;
+            padding: 5vh 5vw;
+            color: #1aff1a;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            overflow: hidden;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.9);
+        }
+
+        #hacking-terminal::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .hack-header {
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .hack-attempts {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .hack-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .hack-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        .hack-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hack-line {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2px;
+            cursor: default;
+        }
+
+        .hack-hex {
+            opacity: 0.7;
+            user-select: none;
+        }
+
+        .hack-chars {
+            letter-spacing: 2px;
+            white-space: pre;
+        }
+
+        .hack-word {
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+
+        .hack-word:hover, .hack-symbol:hover {
+            background-color: #1aff1a;
+            color: #022002;
+        }
+
+        .hack-log {
+            margin-top: 2rem;
+            height: 150px;
+            overflow-y: auto;
+            border: 1px solid #1aff1a;
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+
+        .hack-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background-color: #1aff1a;
+            animation: blink 1s infinite;
+            vertical-align: bottom;
+        }
+
+        /* VAULT DOOR ANIMATION STYLES */
+        .vault-container {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            z-index: 100000;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .vault-door {
+            width: 50%;
+            height: 100%;
+            background: #0f172a;
+            border-right: 4px solid #1e293b;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 2s cubic-bezier(0.65, 0, 0.35, 1);
+            box-shadow: inset -10px 0 30px rgba(0,0,0,0.8);
+        }
+
+        .vault-door.right {
+            border-right: none;
+            border-left: 4px solid #1e293b;
+            box-shadow: inset 10px 0 30px rgba(0,0,0,0.8);
+        }
+
+        .vault-gear {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 8px dashed #334155;
+            border-radius: 50%;
+            transition: transform 1.5s ease-in-out;
+        }
+
+        .vault-door.left .vault-gear { right: -60px; }
+        .vault-door.right .vault-gear { left: -60px; }
+
+        .vault-opening .vault-door.left { transform: translateX(-100%); }
+        .vault-opening .vault-door.left .vault-gear { transform: rotate(-180deg); }
+        .vault-opening .vault-door.right { transform: translateX(100%); }
+        .vault-opening .vault-door.right .vault-gear { transform: rotate(180deg); }
+
+        .vault-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #1e293b 0%, #000 100%);
+            opacity: 0;
+            transition: opacity 1s ease-in;
+            transition-delay: 1.5s;
+            z-index: 99999;
+            pointer-events: none;
+        }
+
+        .vault-opening .vault-content {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .resume-btn {
+            background: transparent;
+            border: 2px solid #38bdf8;
+            color: #38bdf8;
+            padding: 1rem 3rem;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Space Grotesk', monospace;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2), inset 0 0 10px rgba(56, 189, 248, 0.1);
+        }
+
+        .resume-btn:hover {
+            background: #38bdf8;
+            color: #0f172a;
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
     </style>
 </head>
 
@@ -283,6 +477,54 @@
             <br>
             <div>Memory corrupted. Initiating emergency reboot sequence...</div>
             <div class="mt-8 text-[var(--syntax-yellow)] font-bold animate-pulse">REBOOTING IN 3...</div>
+        </div>
+    </div>
+
+    <!-- HACKING TERMINAL OVERLAY -->
+    <div id="hacking-terminal">
+        <div class="hack-header">
+            ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM<br>
+            COPYRIGHT 2075-2077 ROBCO INDUSTRIES<br>
+            -Server 1-<br>
+            <br>
+            [HOW TO PLAY]: Find the exact password among the garbage code.<br>
+            Click a word to guess. If wrong, "Likeness" shows how many<br>
+            letters were in the correct position.<br>
+        </div>
+
+        <div class="hack-attempts" id="hack-attempts-container">
+            4 ATTEMPT(S) LEFT: <span id="hack-blocks">█ █ █ █</span>
+        </div>
+
+        <div class="hack-grid">
+            <div class="hack-column" id="hack-col-1"></div>
+            <div class="hack-column" id="hack-col-2"></div>
+        </div>
+
+        <div class="hack-log" id="hack-log-container">
+            <div>> <span class="hack-cursor"></span></div>
+        </div>
+
+        <!-- VAULT DOORS (HIDDEN UNTIL WIN) -->
+        <div class="vault-container" id="vault-container" style="display: none;">
+            <div class="vault-door left">
+                <div class="vault-gear"></div>
+            </div>
+            <div class="vault-door right">
+                <div class="vault-gear"></div>
+            </div>
+            <div class="vault-content">
+                <h1
+                    style="font-size: 3rem; margin-bottom: 1rem; color: #38bdf8; text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);">
+                    ACCESS GRANTED</h1>
+                <p style="color: #94a3b8; margin-bottom: 3rem; font-family: 'Inter', sans-serif;">Security overridden.
+                    Root payload unlocked.</p>
+                <a href="reusmeupdated.pdf" download class="resume-btn" style="text-decoration: none;">DOWNLOAD
+                    RESUME.PDF</a>
+                <button onclick="location.reload()"
+                    style="margin-top: 3rem; background:transparent; border: none; color:#475569; font-size: 0.8rem; cursor:pointer;"
+                    class="mono-text hover:text-white transition-colors">[ CLOSE CONNECTION ]</button>
+            </div>
         </div>
     </div>
 
@@ -385,26 +627,226 @@
             });
         }
 
-        // --- EASTER EGG SCRIPT ---
+        // --- MATRIX EASTER EGG SCRIPT ---
         window.addEventListener('DOMContentLoaded', () => {
             // The secret code is just 'sudo' - obvious to devs watching the site!
             const secretCode = ['s', 'u', 'd', 'o'];
             let currentSequence = [];
 
+            // The secret code for fallout hacking
+            const hackCode = ['h', 'a', 'c', 'k'];
+            let hackSequence = [];
+
             window.addEventListener('keydown', (e) => {
                 const key = e.key.toLowerCase();
+
+                // --- Sudo trigger
                 currentSequence.push(key);
-
-                // Keep sequence length trimmed to the secret code length
                 currentSequence.splice(-secretCode.length - 1, currentSequence.length - secretCode.length);
-
-                // Check if the typed sequence exactly matches the secret code
                 if (currentSequence.join('') === secretCode.join('')) {
                     triggerMatrixMode();
-                    currentSequence = []; // Reset after trigger
+                    currentSequence = [];
+                }
+
+                // --- Hack trigger
+                hackSequence.push(key);
+                hackSequence.splice(-hackCode.length - 1, hackSequence.length - hackCode.length);
+                if (hackSequence.join('') === hackCode.join('')) {
+                    triggerHackingGame();
+                    hackSequence = [];
                 }
             });
         });
+
+        function triggerHackingGame() {
+            const terminal = document.getElementById('hacking-terminal');
+            if (terminal.style.display === 'flex') return;
+
+            terminal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            const words = [
+                "SYSTEM", "ACCESS", "SERVER", "RESUME", "SOURCE",
+                "CODING", "PYTHON", "OBJECT", "SCRIPT", "HACKER",
+                "MEMORY", "KERNEL", "UPDATE", "DEPLOY"
+            ];
+
+            // Pick a random password
+            const password = words[Math.floor(Math.random() * words.length)];
+            let attempts = 4;
+            const symbols = "!@#$%^&*()_+-=[]{}|;':,./<>?";
+
+            const col1 = document.getElementById('hack-col-1');
+            const col2 = document.getElementById('hack-col-2');
+            const logContainer = document.getElementById('hack-log-container');
+            const blocks = document.getElementById('hack-blocks');
+
+            col1.innerHTML = ''; col2.innerHTML = '';
+            logContainer.innerHTML = '<div>> <span class="hack-cursor"></span></div>';
+
+            let allText = '';
+            for (let i = 0; i < 400; i++) {
+                allText += symbols[Math.floor(Math.random() * symbols.length)];
+            }
+
+            // Insert words randomly into the garbage text
+            let currentText = allText.split('');
+            const gameWords = [];
+            gameWords.push(password);
+
+            // add 8 to 10 filler words
+            const numFillers = Math.floor(Math.random() * 3) + 8;
+            const availableFillers = words.filter(w => w !== password).sort(() => 0.5 - Math.random());
+            for (let i = 0; i < numFillers; i++) {
+                gameWords.push(availableFillers[i]);
+            }
+
+            gameWords.sort(() => 0.5 - Math.random());
+
+            // Place words
+            const positions = [];
+            let pos = 10;
+            for (let w of gameWords) {
+                pos += Math.floor(Math.random() * 15) + w.length;
+                if (pos + w.length < currentText.length) {
+                    for (let i = 0; i < w.length; i++) {
+                        currentText[pos + i] = w[i];
+                    }
+                    positions.push({ word: w, start: pos, end: pos + w.length });
+                }
+            }
+
+            let startHex = 0xFA2C;
+            let charIndex = 0;
+
+            function createLine(col) {
+                const line = document.createElement('div');
+                line.className = 'hack-line';
+
+                const hex = document.createElement('div');
+                hex.className = 'hack-hex';
+                hex.textContent = '0x' + startHex.toString(16).toUpperCase();
+                startHex += 12;
+
+                const chars = document.createElement('div');
+                chars.className = 'hack-chars';
+
+                for (let i = 0; i < 12; i++) {
+                    if (charIndex >= currentText.length) break;
+
+                    const span = document.createElement('span');
+                    span.textContent = currentText[charIndex];
+
+                    // Check if this char is part of a word
+                    const wordData = positions.find(p => charIndex >= p.start && charIndex < p.end);
+                    if (wordData) {
+                        span.className = 'hack-word';
+                        span.dataset.word = wordData.word;
+
+                        // we only attach listener to the first char of the word to prevent multiple triggers
+                        // but we style them all. simpler approach: let event delegation handle it.
+                        span.addEventListener('click', () => handleGuess(wordData.word));
+                        span.addEventListener('mouseover', () => highlightWord(wordData.word));
+                        span.addEventListener('mouseout', () => unhighlightWord(wordData.word));
+                    } else {
+                        span.className = 'hack-symbol';
+                        span.dataset.index = charIndex;
+                        span.addEventListener('click', () => {
+                            logMsg(`> ${span.textContent}`);
+                            logMsg("> ERROR");
+                        });
+                    }
+
+                    chars.appendChild(span);
+                    charIndex++;
+                }
+
+                line.appendChild(hex);
+                line.appendChild(chars);
+                col.appendChild(line);
+            }
+
+            for (let i = 0; i < 16; i++) createLine(col1);
+            for (let i = 0; i < 16; i++) createLine(col2);
+
+            function highlightWord(word) {
+                document.querySelectorAll(`.hack-word[data-word="${word}"]`).forEach(el => {
+                    el.style.backgroundColor = '#1aff1a';
+                    el.style.color = '#022002';
+                });
+            }
+
+            function unhighlightWord(word) {
+                document.querySelectorAll(`.hack-word[data-word="${word}"]`).forEach(el => {
+                    el.style.backgroundColor = 'transparent';
+                    el.style.color = '#1aff1a';
+                });
+            }
+
+            function logMsg(msg, isTyping = false) {
+                const div = document.createElement('div');
+                logContainer.insertBefore(div, logContainer.lastElementChild);
+
+                if (isTyping) {
+                    let i = 0;
+                    function type() {
+                        if (i < msg.length) {
+                            div.textContent += msg.charAt(i);
+                            i++;
+                            setTimeout(type, 20);
+                        }
+                    }
+                    type();
+                } else {
+                    div.textContent = msg;
+                }
+                logContainer.scrollTop = logContainer.scrollHeight;
+            }
+
+            function updateBlocks() {
+                blocks.textContent = '█ '.repeat(attempts).trim();
+            }
+
+            function handleGuess(guessedWord) {
+                if (attempts <= 0) return;
+
+                logMsg(`> ${guessedWord}`);
+
+                if (guessedWord === password) {
+                    logMsg("> EXACT MATCH!", true);
+                    logMsg("> BYPASSING SECURITY...", true);
+
+                    setTimeout(() => {
+                        const vault = document.getElementById('vault-container');
+                        vault.style.display = 'flex';
+
+                        // Small delay to allow display:flex to apply before adding transition class
+                        setTimeout(() => {
+                            vault.classList.add('vault-opening');
+                        }, 50);
+                    }, 1500);
+                } else {
+                    attempts--;
+                    updateBlocks();
+
+                    let likeness = 0;
+                    for (let i = 0; i < password.length; i++) {
+                        if (guessedWord[i] === password[i]) likeness++;
+                    }
+
+                    logMsg("> ENTRY DENIED");
+                    logMsg(`> Likeness=${likeness}`);
+
+                    if (attempts === 0) {
+                        logMsg("> TERMINAL LOCKED", true);
+                        logMsg("> PLEASE CONTACT ADMINISTRATOR", true);
+                        setTimeout(() => {
+                            location.reload();
+                        }, 3000);
+                    }
+                }
+            }
+        }
 
         function triggerMatrixMode() {
             // Only trigger once
@@ -535,6 +977,153 @@
             });
         });
 
+        // --- SUMMARIZER SCRIPT ---
+        window.addEventListener('DOMContentLoaded', () => {
+            const sumBtn = document.getElementById('summarize-btn');
+            const container = document.getElementById('hero-code-container');
+            if (!sumBtn || !container) return;
+
+            let isSummarized = false;
+            let isAnimating = false;
+
+            const originalCodeHTML = `
+<div class="mb-4"><span class="syntax-keyword">Engineer</span> <span class="syntax-variable">developer</span> = <span class="syntax-keyword">new</span> Engineer(</div>
+<div class="pl-8 space-y-2">
+    <div><span class="syntax-string">"Abhishek Allipur"</span>,</div>
+    <div><span class="syntax-string">"AI &amp; Full Stack Engineer"</span>,</div>
+    <div><span class="syntax-keyword">new</span> String[]{<span class="syntax-string">"Scalable Systems"</span>, <span class="syntax-string">"Ethical AI"</span>},</div>
+    <div><span class="syntax-string">"Architecting intelligent solutions"</span></div>
+</div>
+<div class="mb-8">);</div>
+<div class="mb-12">
+    <span class="syntax-keyword">if</span> (<span class="syntax-variable">developer</span>.isAvailable()) {<br />
+    <span class="pl-8"><span class="syntax-variable">System</span>.out.println(<span class="syntax-string">"Let's build something."</span>);</span><br />
+    }
+</div>`;
+
+            const summaryHTML = `
+<div class="space-y-4 font-sans text-sm md:text-base border-l-4 border-[var(--syntax-yellow)] pl-6 py-2 my-4 bg-white/5 rounded-r">
+    <div class="text-[var(--syntax-yellow)] font-bold text-lg mb-2 flex items-center gap-2">
+        <span class="material-symbols-outlined">psychology</span> Executive Summary
+    </div>
+    <p class="text-white/90 leading-relaxed">
+        Computer Science enthusiast with strong fundamentals in <strong>Java</strong> and <strong>data structures</strong>, 
+        currently building practical experience in <span class="text-[var(--syntax-green)]">AWS, cloud deployment, and AI-based project development</span>.
+    </p>
+    <p class="text-white/80 leading-relaxed max-w-md">
+        Familiar with Git workflows, server configuration, and backend logic implementation. Passionate about solving real-world problems through scalable and efficient software solutions.
+    </p>
+    <div class="mt-4 inline-block bg-[var(--syntax-purple)]/20 text-[var(--syntax-purple)] px-3 py-1 rounded-full text-xs font-bold border border-[var(--syntax-purple)]/30">
+        Status: Seeking an opportunity to apply technical knowledge in a growth-oriented environment
+    </div>
+</div>`;
+
+            function decodeHTMLContent(targetElement, htmlString, onComplete) {
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = htmlString.trim();
+                targetElement.innerHTML = '';
+
+                const textNodes = [];
+                function extractTextNodes(node, targetParent) {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        if (node.textContent.trim().length > 0) {
+                            const span = document.createElement('span');
+                            span.style.opacity = '0';
+                            targetParent.appendChild(span);
+                            textNodes.push({ element: span, text: node.textContent });
+                        } else {
+                            targetParent.appendChild(document.createTextNode(node.textContent));
+                        }
+                    } else if (node.nodeType === Node.ELEMENT_NODE) {
+                        const newElement = document.createElement(node.tagName);
+                        for (let i = 0; i < node.attributes.length; i++) {
+                            newElement.setAttribute(node.attributes[i].name, node.attributes[i].value);
+                        }
+                        targetParent.appendChild(newElement);
+                        Array.from(node.childNodes).forEach(child => extractTextNodes(child, newElement));
+                    }
+                }
+
+                Array.from(tempDiv.childNodes).forEach(child => extractTextNodes(child, targetElement));
+
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()<>{}[]';
+                let delay = 0;
+
+                if (textNodes.length === 0 && onComplete) {
+                    onComplete();
+                    return;
+                }
+
+                textNodes.forEach(({ element, text }, idx) => {
+                    setTimeout(() => {
+                        element.style.opacity = '1';
+                        let iteration = 0;
+                        const interval = setInterval(() => {
+                            element.textContent = text.split('').map((char, index) => {
+                                if (char === ' ') return ' ';
+                                if (index < iteration) return text[index];
+                                return chars[Math.floor(Math.random() * chars.length)];
+                            }).join('');
+
+                            if (iteration >= text.length) {
+                                clearInterval(interval);
+                                element.textContent = text;
+                                if (idx === textNodes.length - 1 && onComplete) onComplete();
+                            }
+                            iteration += 0.5; // speed
+                        }, 20);
+                    }, delay);
+                    delay += 50 + (text.length * 5);
+                });
+            }
+
+            sumBtn.addEventListener('click', () => {
+                if (isAnimating) return;
+                isAnimating = true;
+
+                sumBtn.classList.add('opacity-50', 'pointer-events-none');
+                sumBtn.innerHTML = '<span class="material-symbols-outlined text-sm animate-spin" style="animation: spin 1s linear infinite;">refresh</span> processing...';
+
+                container.innerHTML = '';
+                const termLogs = isSummarized ? [
+                    "> reverse_compiling_to_java...",
+                    "> bypassing_human_translation...",
+                    "> restoring_syntax_tree...",
+                    "> rendering_code_output..."
+                ] : [
+                    "> initializing_human_translator...",
+                    "> parsing_java_syntax_tree...",
+                    "> extracting_core_variables...",
+                    "> rendering_human_readable_output..."
+                ];
+
+                let logDelay = 0;
+                termLogs.forEach((log) => {
+                    setTimeout(() => {
+                        const p = document.createElement('div');
+                        p.className = "text-[var(--syntax-green)] text-xs mb-1 font-mono";
+                        p.innerText = log;
+                        container.appendChild(p);
+                    }, logDelay);
+                    logDelay += 350;
+                });
+
+                setTimeout(() => {
+                    container.innerHTML = '';
+                    const targetHTML = isSummarized ? originalCodeHTML : summaryHTML;
+
+                    decodeHTMLContent(container, targetHTML, () => {
+                        isAnimating = false;
+                        isSummarized = !isSummarized;
+                        sumBtn.classList.remove('opacity-50', 'pointer-events-none');
+                        sumBtn.innerHTML = isSummarized
+                            ? '<span class="material-symbols-outlined text-sm">code</span> ./view_code.sh'
+                            : '<span class="material-symbols-outlined text-sm">translate</span> ./summarize.sh';
+                    });
+                }, logDelay + 200);
+            });
+        });
+
     </script>
     <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
         <div class="max-w-7xl mx-auto flex overflow-x-auto no-scrollbar">
@@ -578,10 +1167,12 @@
                                 <div id="hero-code-container" style="min-height: 250px;">
                                     <span class="cursor"></span>
                                 </div>
-                                <div class="flex flex-wrap gap-4">
-                                    <a class="btn-mono text-[10px] uppercase" href="#projects">git clone ./projects</a>
-                                    <a class="btn-mono text-[10px] uppercase bg-white text-black font-bold border-white"
-                                        href="contact.html">sh ./contact.sh</a>
+                                <div class="flex flex-wrap gap-4 items-center">
+                                    <button
+                                        class="btn-mono text-[10px] uppercase text-[var(--syntax-yellow)] border-[var(--syntax-yellow)] hover:bg-[var(--syntax-yellow)]/10 flex items-center gap-2 transition-all mr-auto md:mr-0"
+                                        id="summarize-btn">
+                                        <span class="material-symbols-outlined text-sm">translate</span> ./summarize.sh
+                                    </button>
                                 </div>
                             </div>
                         </div>
