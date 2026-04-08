@@ -1,0 +1,271 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   CSS VARIABLES
+   ============================================================ */
+:root {
+    --pitch-black: #000000;
+    --dark-gray: #0D0D0D;
+    --medium-gray: #1A1A1A;
+    --border-gray: #2D2D2D;
+    --off-white: #E0E0E0;
+    --syntax-purple: #B197FC;
+    --syntax-green: #69DB7C;
+    --syntax-yellow: #FFD43B;
+    --syntax-orange: #FFA94D;
+}
+
+/* ============================================================
+   BASE STYLES (index.html)
+   ============================================================ */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--pitch-black);
+    color: var(--off-white);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+    overflow-x: hidden;
+}
+
+/* ============================================================
+   TYPOGRAPHY HELPERS
+   ============================================================ */
+.mono-text {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.serif-text {
+    font-family: 'Playfair Display', serif;
+}
+
+/* ============================================================
+   EDITOR WINDOW COMPONENT
+   ============================================================ */
+.editor-window {
+    background-color: var(--dark-gray);
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.editor-header {
+    background-color: var(--medium-gray);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-gray);
+}
+
+.dot { width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+.dot-red { background-color: #FF5F56; }
+.dot-yellow { background-color: #FFBD2E; }
+.dot-green { background-color: #27C93F; }
+
+/* ============================================================
+   CURSOR ANIMATION
+   ============================================================ */
+.cursor {
+    display: inline-block;
+    width: 8px;
+    height: 1.2em;
+    background-color: var(--off-white);
+    margin-left: 4px;
+    vertical-align: middle;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ============================================================
+   NAV TABS
+   ============================================================ */
+.nav-tab {
+    @apply border-r border-white/5 px-6 py-3 text-[11px] transition-all flex items-center gap-2 relative;
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--medium-gray);
+    color: rgba(255,255,255,0.4);
+}
+
+.nav-tab.active {
+    background: var(--dark-gray);
+    color: var(--off-white);
+    border-top: 2px solid var(--off-white);
+}
+
+.nav-tab:not(.active):hover {
+    color: var(--off-white);
+    background: rgba(255,255,255,0.05);
+}
+
+/* ============================================================
+   SYNTAX HIGHLIGHTING
+   ============================================================ */
+.syntax-keyword { color: var(--syntax-purple); }
+.syntax-string  { color: var(--syntax-green); }
+.syntax-variable { color: var(--syntax-yellow); }
+.syntax-comment { color: #666666; font-style: italic; }
+
+/* ============================================================
+   REUSABLE COMPONENTS
+   ============================================================ */
+.code-tag {
+    @apply text-[10px] bg-white/5 border border-white/10 px-2 py-1 rounded transition-colors hover:bg-white/10;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.btn-mono {
+    @apply px-6 py-3 border border-white/20 transition-all duration-200 hover:bg-white/10 hover:border-white/40;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.line-number {
+    @apply text-white/10 text-xs pr-4 text-right select-none border-r border-white/5;
+    font-family: 'JetBrains Mono', monospace;
+    min-width: 40px;
+}
+
+/* ============================================================
+   PROFILE FRAME
+   ============================================================ */
+.profile-frame {
+    border: 2px solid var(--border-gray);
+    box-shadow: 0 0 25px rgba(45, 45, 45, 0.6);
+    border-radius: 30px;
+    background-color: #151515;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ============================================================
+   BOOT SCREEN
+   ============================================================ */
+#boot-screen {
+    position: fixed;
+    inset: 0;
+    background: #000000;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10% 20%;
+}
+
+.boot-log {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: logEntry 0.1s forwards;
+}
+
+@keyframes logEntry {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.progress-bar-container {
+    width: 300px;
+    height: 2px;
+    background: rgba(255,255,255,0.1);
+    margin-top: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--off-white);
+    width: 0%;
+    animation: fillProgress 3.5s cubic-bezier(0.1, 0, 0.3, 1) forwards;
+}
+
+@keyframes fillProgress {
+    0%   { width: 0%; }
+    20%  { width: 10%; }
+    40%  { width: 45%; }
+    70%  { width: 85%; }
+    100% { width: 100%; }
+}
+
+@keyframes screenFadeOut {
+    to { transform: translateY(-100%); opacity: 0; visibility: hidden; }
+}
+
+.boot-complete {
+    animation: screenFadeOut 0.8s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+    animation-delay: 0.5s;
+}
+
+/* ============================================================
+   GIT TIMELINE
+   ============================================================ */
+.git-branch-line {
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border-gray);
+}
+
+.git-node {
+    position: absolute;
+    left: 16px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--off-white);
+    border: 2px solid var(--pitch-black);
+    z-index: 10;
+}
+
+/* ============================================================
+   PROJECT ICONS (LifeLink SOS)
+   ============================================================ */
+.sos-icon {
+    background: white;
+    border-radius: 12px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sos-circle {
+    background: #FF3B30;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 800;
+    box-shadow: 0 4px 10px rgba(255, 59, 48, 0.3);
+}
+
+/* ============================================================
+   CONTACT PAGE (contact.html)
+   ============================================================ */
+@keyframes blink-contact {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.cursor-blink {
+    animation: blink-contact 1s infinite;
+}
+
+::placeholder {
+    color: #4A4A4A !important;
+}

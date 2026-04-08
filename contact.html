@@ -5,50 +5,13 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Contact.sh Monochromatic Terminal</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+    <link rel="stylesheet" href="output.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "mono-black": "#000000",
-                        "mono-dark": "#1A1A1A",
-                        "mono-medium": "#333333",
-                        "mono-light": "#A1A1A1",
-                        "mono-offwhite": "#EFEFEF",
-                        "terminal-border": "#333333",
-                    },
-                    fontFamily: {
-                        "display": ["Space Grotesk", "monospace"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                },
-            },
-        }
-    </script>
-    <style type="text/tailwindcss">
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        .cursor-blink {
-            animation: blink 1s infinite;
-        }
-        ::placeholder {
-            color: #4A4A4A !important;
-        }
-    </style>
+
 </head>
 
 <body
